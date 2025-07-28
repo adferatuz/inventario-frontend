@@ -1,0 +1,123 @@
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Variants */
+.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.primary:hover {
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.danger {
+  background: #dc3545;
+  color: white;
+}
+
+.danger:hover {
+  background: #c82333;
+}
+
+.success {
+  background: #28a745;
+  color: white;
+}
+
+.success:hover {
+  background: #218838;
+}
+
+.secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.secondary:hover {
+  background: #5a6268;
+}
+
+.action {
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: none; /* Base action buttons don't have background */
+  color: inherit;
+  box-shadow: none;
+}
+
+.action:hover {
+  transform: none;
+  background: rgba(0, 0, 0, 0.05); /* Light background on hover for action buttons */
+}
+
+/* Specific action button colors (from original styles) */
+.action.edit {
+  background: #007bff;
+  color: white;
+}
+
+.action.edit:hover {
+  background: #0056b3;
+}
+
+.action.delete {
+  background: #dc3545;
+  color: white;
+}
+
+.action.delete:hover {
+  background: #c82333;
+}
+
+/* Pagination buttons (specific styling) */
+.paginationButton {
+  padding: 10px 15px;
+  border: 2px solid #e1e5e9;
+  background: white;
+  color: #333;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.paginationButton:hover {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+.paginationButton.active {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+.paginationButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
