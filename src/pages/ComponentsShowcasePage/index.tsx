@@ -13,12 +13,19 @@ const ComponentsShowcasePage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [loadingMessage, setLoadingMessage] = useState('Cargando...');
+  const [showSpinner, setShowSpinner] = useState(false); // Nuevo estado para controlar la visibilidad del Spinner
 
   const tableHeaders = ['ID', 'Nombre', 'Descripción', 'Acciones'];
   const tableData = [
     { id: 1, name: 'Producto A', description: 'Descripción del Producto A' },
     { id: 2, name: 'Producto B', description: 'Descripción del Producto B' },
   ];
+
+  const handleShowSpinner = (message: string) => {
+    setLoadingMessage(message);
+    setShowSpinner(true);
+    setTimeout(() => setShowSpinner(false), 3000); // Ocultar después de 3 segundos para demostración
+  };
 
   return (
     <div className={styles.container}>
@@ -109,12 +116,9 @@ const ComponentsShowcasePage: React.FC = () => {
 
       <section className={styles.section}>
         <h2>Spinner</h2>
-        <Button onClick={() => setLoadingMessage('Cargando datos...')}>Mostrar Spinner</Button>
-        <Button onClick={() => setLoadingMessage('Procesando...')}>Mostrar Spinner con Mensaje</Button>
-        {/* Para ver el spinner, puedes envolverlo en un estado condicional */}
-        {/* Por ejemplo, si tuvieras un estado `isLoading` */}
-        {/* {isLoading && <Spinner message={loadingMessage} />} */}
-        <Spinner message={loadingMessage} /> {/* Renderizado directamente para demostración */}
+        <Button onClick={() => handleShowSpinner('Cargando datos...')}>Mostrar Spinner</Button>
+        <Button onClick={() => handleShowSpinner('Procesando...')}>Mostrar Spinner con Mensaje</Button>
+        {showSpinner && <Spinner message={loadingMessage} />}
       </section>
     </div>
   );
