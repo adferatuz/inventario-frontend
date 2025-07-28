@@ -17,25 +17,25 @@ Este proyecto es la interfaz de usuario moderna para el Sistema de Inventario, c
 
 Esta aplicación permite a los usuarios gestionar un inventario de productos. Las funcionalidades principales incluyen:
 
-*   Autenticación de usuarios (Login).
-*   Visualización de productos con paginación, filtros y búsqueda.
-*   Creación, Actualización y Eliminación (CRUD) de productos.
-*   Dashboard con estadísticas clave del inventario.
+- Autenticación de usuarios (Login).
+- Visualización de productos con paginación, filtros y búsqueda.
+- Creación, Actualización y Eliminación (CRUD) de productos.
+- Dashboard con estadísticas clave del inventario.
 
 ### Stack Tecnológico y Versiones
 
-*   **Node.js:** `(versión actual)`
-*   **pnpm:** `(versión actual)`
-*   **React:** `(versión actual)`
-*   **Vite:** `(versión actual)`
-*   **TypeScript:** `(versión actual)`
+- **Node.js:** `(versión actual)`
+- **pnpm:** `(versión actual)`
+- **React:** `(versión actual)`
+- **Vite:** `(versión actual)`
+- **TypeScript:** `(versión actual)`
 
 ### Dependencias Clave
 
-*   `react`: Biblioteca principal para la UI.
-*   `react-dom`: Renderizado en el DOM.
-*   `react-router-dom`: Para el enrutamiento de la aplicación (ej. `/login`, `/dashboard`).
-*   `axios`: Cliente HTTP para las peticiones a la API del backend.
+- `react`: Biblioteca principal para la UI.
+- `react-dom`: Renderizado en el DOM.
+- `react-router-dom`: Para el enrutamiento de la aplicación (ej. `/login`, `/dashboard`).
+- `axios`: Cliente HTTP para las peticiones a la API del backend.
 
 ### Arquitectura y Escalabilidad Futura
 
@@ -48,20 +48,22 @@ El plan de escalabilidad incluye la **integración de un módulo de IA (IA FIRST
 La aplicación interactúa con el backend de Java Spring existente a través de los siguientes endpoints:
 
 **Autenticación (`/api/auth`)**
-*   `POST /login`: Iniciar sesión.
-*   `GET /validate`: Validar token.
+
+- `POST /login`: Iniciar sesión.
+- `GET /validate`: Validar token.
 
 **Productos (`/api/products`)**
-*   `GET /`: Obtener productos con paginación.
-*   `GET /{id}`: Obtener un producto por su ID.
-*   `POST /`: Crear un nuevo producto.
-*   `PUT /{id}`: Actualizar un producto existente.
-*   `DELETE /{id}`: Eliminar un producto.
-*   `GET /search`: Buscar productos.
-*   `GET /low-stock`: Obtener productos con bajo stock.
-*   `GET /categories`: Obtener lista de categorías únicas.
-*   `GET /brands`: Obtener lista de marcas únicas.
-*   `PATCH /{id}/stock`: Actualizar el stock de un producto.
+
+- `GET /`: Obtener productos con paginación.
+- `GET /{id}`: Obtener un producto por su ID.
+- `POST /`: Crear un nuevo producto.
+- `PUT /{id}`: Actualizar un producto existente.
+- `DELETE /{id}`: Eliminar un producto.
+- `GET /search`: Buscar productos.
+- `GET /low-stock`: Obtener productos con bajo stock.
+- `GET /categories`: Obtener lista de categorías únicas.
+- `GET /brands`: Obtener lista de marcas únicas.
+- `PATCH /{id}/stock`: Actualizar el stock de un producto.
 
 ### Guía de Inicio Rápido
 
