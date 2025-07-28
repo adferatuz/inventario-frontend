@@ -1,0 +1,42 @@
+.tableContainer {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+}
+
+.productsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.productsTable th {
+  background: #f8f9fa;
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.productsTable td {
+  padding: 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.productsTable tr:hover {
+  background: #f8f9fa;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .productsTable {
+    font-size: 0.9rem;
+  }
+
+  .productsTable th,
+  .productsTable td {
+    padding: 10px 8px;
+  }
+}

@@ -1,10 +1,11 @@
 import React from 'react';
-import './App.css';
+import ComponentsShowcasePage from '@/pages/ComponentsShowcasePage'; // Importar la página de demostración
+import '@/app/App.css'; // Mantener la importación de estilos de App.css
 
 function App() {
   return (
     <div className="App">
-      {/* Contenido de la aplicación irá aquí */}
+      <ComponentsShowcasePage /> {/* Renderizar la página de demostración */}
     </div>
   );
 }
