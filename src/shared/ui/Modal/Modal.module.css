@@ -1,0 +1,89 @@
+.modal {
+  display: flex; /* Usar flexbox para centrar */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+}
+
+.modalContent {
+  background: white;
+  padding: 0; /* El padding se manejará dentro de header y body */
+  border-radius: 15px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideDown 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Añadido para consistencia */
+}
+
+.modalHeader {
+  padding: 25px 30px;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalTitle {
+  color: #333;
+  margin: 0;
+  font-size: 1.5rem; /* Ajustado para que coincida con el original */
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #666;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.closeBtn:hover {
+  background: #f8f9fa;
+  color: #333;
+}
+
+.modalBody {
+  padding: 30px; /* Padding para el contenido del modal */
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modalContent {
+    width: 95%;
+  }
+  .modalHeader {
+    padding: 20px 25px; /* Ajustar padding en móviles */
+  }
+  .modalBody {
+    padding: 20px; /* Ajustar padding en móviles */
+  }
+}

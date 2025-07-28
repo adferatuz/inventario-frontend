@@ -36,6 +36,7 @@ Esta aplicación permite a los usuarios gestionar un inventario de productos. La
 - `react-dom`: Renderizado en el DOM.
 - `react-router-dom`: Para el enrutamiento de la aplicación (ej. `/login`, `/dashboard`).
 - `axios`: Cliente HTTP para las peticiones a la API del backend.
+- `@fortawesome/fontawesome-free`: Librería de iconos.
 
 ### Arquitectura y Escalabilidad Futura
 
