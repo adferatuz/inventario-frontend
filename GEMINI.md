@@ -20,9 +20,9 @@ El proyecto frontend ha sido inicializado con éxito utilizando React, Vite y Ty
 
 **Próximas Tareas (Sesión Siguiente):**
 
-*   **[ ] Configurar cliente `axios` base para las llamadas a la API.** (TAREA EN PROGRESO)
-    *   Instalar la librería `axios`.
-    *   Crear una instancia configurada de `axios` en `src/shared/api/` para manejar las peticiones al backend.
+*   **[x] Configurar cliente `axios` base para las llamadas a la API.** (TAREA COMPLETADA)
+    *   [x] Instalar la librería `axios`.
+    *   [x] Crear una instancia configurada de `axios` en `src/shared/api/` para manejar las peticiones al backend.
 
 **Instrucciones Post-Tarea:**
 Una vez completada la tarea de configuración de Axios, por favor, actualiza los repositorios local y remoto (ramas `main` y `develop`) para asegurar que todos los cambios estén al día.
