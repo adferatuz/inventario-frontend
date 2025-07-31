@@ -1,30 +1,193 @@
-# Estado Actual del Proyecto Frontend (inventario-frontend)
+### Plan de Acción para la Implementación de la Capa `entities`
 
-**Fecha de la última sesión:** 28 de julio de 2025
+**Objetivo:** Definir los modelos de datos y los servicios de API necesarios para la lógica de negocio de la aplicación de inventario.
 
-**Contexto General:**
-El proyecto frontend ha sido inicializado con éxito utilizando React, Vite y TypeScript, siguiendo una arquitectura modular granular (Feature-Sliced Design - FSD). El objetivo es replicar la interfaz visual del proyecto original de JavaScript "vainilla" y prepararlo para una futura integración con un módulo de IA (IA FIRST).
+**Pasos a seguir:**
 
-**Estado de la Fase 1: Fundación y Migración del CRUD**
+1.  **Obtener Contexto del Código Heredado (Acción Requerida por el Usuario):**
+    *   El usuario debe proporcionar el contenido de los siguientes archivos del proyecto JavaScript original, ya que el acceso directo está restringido:
+        *   `api.js`
+        *   `auth.js`
+        *   `dashboard.js`
+        *   `login.js`
+    *   **Propósito:** Analizar estos archivos para determinar la estructura exacta de los objetos intercambiados con el backend (payloads y respuestas).
 
-*   **Andamiaje del Proyecto:**
-    *   [x] Inicialización del proyecto (Vite, React, TS, pnpm).
-    *   [x] Configuración de ESLint y Prettier para consistencia de código.
-    *   [x] Definición e implementación de la estructura de directorios FSD (`app`, `pages`, `features`, `entities`, `shared`).
-    *   [x] Limpieza de archivos por defecto de la plantilla de Vite/React.
+2.  **Crear Estructura de Directorios (FSD):**
+    *   Crear el directorio `src/entities/Product`.
+    *   Crear el directorio `src/entities/User`.
 
-*   **Capa `shared` (Componentes Reutilizables):**
-    *   [x] Creación de componentes UI genéricos: `Button`, `Input`, `Modal`, `Table`, `Spinner`.
-    *   [x] Creación de una página de demostración (`ComponentsShowcasePage`) para visualizar y probar estos componentes.
-    *   [x] Instalación y configuración de FontAwesome para los iconos.
+3.  **Definir Interfaces TypeScript:**
+    *   Basado en el análisis del paso 1, crear el archivo `src/entities/Product/model/types.ts` con la interfaz `Product`.
+    *   Crear el archivo `src/entities/User/model/types.ts` con las interfaces `User` y `AuthResponse`.
 
-**Próximas Tareas (Sesión Siguiente):**
+4.  **Implementar Servicios de API:**
+    *   Crear el archivo `src/entities/Product/api/productService.ts`.
+        *   Importar el `apiClient` desde `src/shared/api`.
+        *   Implementar y exportar funciones para las operaciones CRUD de productos (ej: `getProducts`, `createProduct`, `updateProduct`, `deleteProduct`).
+    *   Crear el archivo `src/entities/User/api/authService.ts`.
+        *   Importar el `apiClient`.
+        *   Implementar y exportar funciones para la autenticación (ej: `login`, `register`, `logout`).
 
-*   **[ ] Configurar cliente `axios` base para las llamadas a la API.** (TAREA EN PROGRESO)
-    *   Instalar la librería `axios`.
-    *   Crear una instancia configurada de `axios` en `src/shared/api/` para manejar las peticiones al backend.
+5.  **Verificación y Próximos Pasos:**
+    *   Revisar que el código cumpla con los estándares de ESLint y Prettier.
+    *   Confirmar que los nuevos módulos (`entities`) estén listos para ser consumidos por la capa `features`.
+    *   Actualizar `GEMINI.md` para reflejar la finalización de esta fase.
 
-**Instrucciones Post-Tarea:**
-Una vez completada la tarea de configuración de Axios, por favor, actualiza los repositorios local y remoto (ramas `main` y `develop`) para asegurar que todos los cambios estén al día.
+DATOS OBTENIDOS DE LA REVISION DEL CODIGO HEREDADO.
+
+### Análisis para la Capa `entities`
+
+A continuación se detalla el análisis del código JavaScript existente para definir los modelos de datos y los servicios de API necesarios para la capa `entities` de la aplicación de inventario.
 
 ---
+
+### 1. Análisis del Código Heredado
+
+**Archivos analizados:**
+*   `api.js`
+*   `auth.js`
+*   `dashboard.js`
+*   `login.js`
+
+**Conclusiones del análisis:**
+
+*   **`auth.js` y `login.js`:**
+    *   El objeto de respuesta de autenticación (`AuthResponse`) contiene: `token`, `username`, `email`, `firstName`, `lastName` y `role`.
+    *   El payload para el login (`login`) requiere `usernameOrEmail` y `password`.
+    *   Se utiliza `localStorage` para persistir el `authToken` y los datos del usuario (`userData`).
+
+*   **`api.js` y `dashboard.js`:**
+    *   El objeto `Product` tiene los siguientes atributos: `id`, `sku`, `name`, `description`, `price`, `stockQuantity`, `minimumStock`, `category`, `brand` y `status`.
+    *   Las operaciones CRUD para productos están bien definidas:
+        *   `getProducts` (con paginación y ordenamiento)
+        *   `getProductById`
+        *   `createProduct`
+        *   `updateProduct`
+        *   `deleteProduct`
+    *   Existen funciones adicionales como `searchProducts`, `getLowStockProducts`, `getCategories` y `getBrands`.
+
+---
+
+### 2. Estructura de Directorios (FSD)
+
+Se recomienda la siguiente estructura de directorios para la capa `entities`:
+
+```
+src/
+└── entities/
+    ├── Product/
+    │   ├── api/
+    │   │   └── productService.ts
+    │   └── model/
+    │       └── types.ts
+    └── User/
+        ├── api/
+        │   └── authService.ts
+        └── model/
+            └── types.ts
+```
+
+---
+
+### 3. Definición de Interfaces TypeScript
+
+**`src/entities/Product/model/types.ts`**
+
+```typescript
+export interface Product {
+  id: number;
+  sku: string;
+  name: string;
+  description?: string;
+  price: number;
+  stockQuantity: number;
+  minimumStock: number;
+  category?: string;
+  brand?: string;
+  status: 'ACTIVE' | 'INACTIVE' | 'DISCONTINUED';
+}
+```
+
+**`src/entities/User/model/types.ts`**
+
+```typescript
+export interface User {
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: 'ADMIN' | 'USER';
+}
+
+export interface AuthResponse {
+  token: string;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: 'ADMIN' | 'USER';
+}
+```
+
+---
+
+### 4. Implementación de Servicios de API
+
+**`src/entities/Product/api/productService.ts`**
+
+```typescript
+import { apiClient } from '@/shared/api';
+import { Product } from '../model/types';
+
+export const getProducts = async (page = 0, size = 10, sortBy = 'id', sortDir = 'asc'): Promise<any> => {
+  const response = await apiClient.get(`/products?page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}`);
+  return response.data;
+};
+
+export const createProduct = async (productData: Omit<Product, 'id'>): Promise<Product> => {
+  const response = await apiClient.post('/products', productData);
+  return response.data;
+};
+
+export const updateProduct = async (id: number, productData: Partial<Omit<Product, 'id'>>): Promise<Product> => {
+  const response = await apiClient.put(`/products/${id}`, productData);
+  return response.data;
+};
+
+export const deleteProduct = async (id: number): Promise<void> => {
+  await apiClient.delete(`/products/${id}`);
+};
+```
+
+**`src/entities/User/api/authService.ts`**
+
+```typescript
+import { apiClient } from '@/shared/api';
+import { User, AuthResponse } from '../model/types';
+
+export const login = async (credentials: { usernameOrEmail: string; password: string }): Promise<AuthResponse> => {
+  const response = await apiClient.post('/auth/login', credentials);
+  return response.data;
+};
+
+// Opcional: se puede añadir register y logout si se gestionan desde el backend
+export const register = async (userData: Omit<User, 'role'> & {password: string}): Promise<AuthResponse> => {
+    const response = await apiClient.post('/auth/register', userData);
+    return response.data;
+}
+
+export const logout = (): void => {
+    // Lógica de logout (ej: limpiar localStorage)
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
+};
+```
+
+---
+
+### 5. Verificación y Próximos Pasos
+
+*   El código TypeScript propuesto sigue las convenciones modernas y está tipado.
+*   Se deben instalar las dependencias necesarias (`axios` para `apiClient`).
+*   Los nuevos módulos en `src/entities` están listos para ser importados y utilizados por la capa `features`.
+*   Se recomienda actualizar `GEMINI.md` para marcar esta fase como completada.
