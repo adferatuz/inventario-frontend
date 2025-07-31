@@ -9,4 +9,6 @@ export interface Product {
   category?: string;
   brand?: string;
   status: 'ACTIVE' | 'INACTIVE' | 'DISCONTINUED';
+  createdAt: string;
+  updatedAt: string;
 }
