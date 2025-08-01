@@ -1,0 +1,49 @@
+### Resumen del Estado Actual del Proyecto y Próximos Pasos (Para la Próxima Sesión)
+
+**1. Estado Actual del Proyecto Frontend:**
+
+*   **Fase 1: Fundación y Configuración (Completada)**
+    *   Proyecto inicializado con React, Vite, TypeScript, pnpm.
+    *   Configuración de ESLint y Prettier.
+    *   Estructura de directorios FSD implementada.
+    *   Capa `shared` con componentes UI genéricos y `axios` configurado.
+
+*   **Fase 2: Lógica de Negocio - Capa `entities` (Completada)**
+    *   Análisis del código heredado del backend realizado.
+    *   Interfaces TypeScript (`Product`, `User`, `AuthResponse`) definidas y sincronizadas con DTOs del backend.
+    *   Servicios de API (`productService.ts`, `authService.ts`) implementados para interactuar con el backend de lógica de negocio.
+
+*   **Fase 3: Gestión de Estado y Autenticación (Completada)**
+    *   Sistema de estado global de autenticación implementado con `useReducer` y `useContext`.
+    *   Integración completa con Supabase para autenticación:
+        *   Librería `@supabase/supabase-js` instalada.
+        *   Cliente de Supabase configurado (`src/shared/lib/supabase.ts`).
+        *   `AuthProvider` actualizado para manejar la sesión inicial y escuchar cambios de autenticación de Supabase.
+        *   Servicio de autenticación específico de Supabase (`supabaseAuthService.ts`) creado.
+        *   `apiClient` (axios) configurado con un interceptor para incluir el JWT de Supabase en las cabeceras de las peticiones al backend de lógica de negocio.
+    *   `AuthProvider` integrado en `src/app/main.tsx`.
+
+*   **Dependencias Adicionales:**
+    *   `react-router-dom` instalado para la gestión de rutas.
+
+*   **Calidad del Código:**
+    *   Errores de tipado (TypeScript) resueltos.
+    *   Errores de linting (ESLint) resueltos, incluyendo refactorización para `verbatimModuleSyntax` y `react-refresh/only-export-components`.
+
+**2. Hoja de Ruta para la Implementación de Features (Próxima Fase):**
+
+La hoja de ruta detallada para la implementación de las `features` ha sido definida y validada. Se enfoca en:
+
+*   **Fase 1: Autenticación y Rutas Protegidas** (Configuración de Rutas, Página de Login).
+*   **Fase 2: Dashboard y Layout Principal**.
+*   **Fase 3: Visualización y Gestión de Productos** (Listado, Paginación, Filtros/Búsqueda, CRUD).
+
+**3. Próximo Paso Inmediato (Referencia Visual Vanilla UI):**
+
+Para asegurar que los estilos e interfaces de usuario del frontend React sean idénticos a tu proyecto original en JavaScript vanilla, se ha acordado el siguiente paso:
+
+*   **Acción Requerida por el Usuario:** Crear un nuevo directorio llamado `ui-reference` en la raíz del proyecto `inventario-frontend`.
+*   **Acción Requerida por el Usuario:** Copiar todos los archivos y carpetas de tu proyecto vanilla (HTML, CSS, JS, imágenes, etc.) dentro de este nuevo directorio `ui-reference`.
+*   **Acción Requerida por el Usuario:** Añadir `ui-reference/` a tu archivo `.gitignore` para que estos archivos no sean rastreados por Git.
+
+Una vez que hayas completado estos pasos, notifícame para que pueda comenzar a revisar el proyecto vanilla y utilizarlo como referencia visual durante la implementación de las `features`.

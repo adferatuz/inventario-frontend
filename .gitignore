@@ -153,3 +153,5 @@ vite.config.ts.timestamp-*
 # Vite-specific
 dist-ssr
 *.local
+# Directorio de referencia visual
+front-end-vanilla/
