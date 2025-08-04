@@ -2,7 +2,7 @@ import axios from 'axios';
 import { supabase } from '@/shared/lib/supabase';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:3001/api', // TODO: move to env variables
+  baseURL: 'http://localhost:8080', // Apuntando al backend local
   headers: {
     'Content-Type': 'application/json',
   },

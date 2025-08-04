@@ -1,0 +1,97 @@
+.productTableContainer {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .productTableContainer {
+    /* overflow-x: auto; Removido para centralizar la responsividad en Table.module.css */
+  }
+}
+
+
+.searchBar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center; /* Alinea verticalmente el input y el botón */
+}
+
+.searchBar input {
+  flex-grow: 1;
+}
+
+.paginationControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.paginationControls span {
+  font-weight: 500;
+  color: #555;
+}
+
+.errorMessage {
+  color: #dc3545;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.noProductsMessage {
+  text-align: center;
+  padding: 40px;
+  color: #6c757d;
+  font-size: 1.1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-top: 20px;
+  border: 1px dashed #e9ecef;
+}
+
+.actions button {
+  margin-right: 5px;
+}
+
+.cardActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.viewMoreButton {
+  background-color: #6c757d;
+  color: white;
+}
+
+.viewMoreButton:hover {
+  background-color: #5a6268;
+}
+
+.editButton {
+  background-color: #007bff;
+  color: white;
+}
+
+.editButton:hover {
+  background-color: #0056b3;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+  color: white;
+}
+
+.deleteButton:hover {
+  background-color: #c82333;
+}
