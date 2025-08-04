@@ -1,7 +1,7 @@
 .tableContainer {
   background: white;
   border-radius: 15px;
-  overflow: hidden;
+  /* overflow: hidden; Removido para permitir el scroll horizontal */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
   margin-bottom: 20px;
 }
@@ -9,34 +9,109 @@
 .productsTable {
   width: 100%;
   border-collapse: collapse;
+  display: table; /* Asegura el comportamiento de tabla en escritorio */
 }
 
-.productsTable th {
-  background: #f8f9fa;
-  padding: 15px;
-  text-align: left;
-  font-weight: 600;
-  color: #333;
-  border-bottom: 2px solid #e9ecef;
+.productsTable tr {
+  display: table-row; /* Asegura el comportamiento de fila de tabla en escritorio */
 }
 
 .productsTable td {
   padding: 15px;
   border-bottom: 1px solid #e9ecef;
+  display: table-cell; /* Asegura el comportamiento de celda de tabla en escritorio */
 }
 
-.productsTable tr:hover {
-  background: #f8f9fa;
+/* Card View Styles */
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cardItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 5px;
+  border-bottom: 1px dashed #eee;
+}
+
+.cardItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.cardLabel {
+  font-weight: 600;
+  color: #555;
+  flex-basis: 40%; /* Ajusta el ancho de la etiqueta */
+}
+
+.cardValue {
+  text-align: right;
+  flex-basis: 60%; /* Ajusta el ancho del valor */
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .productsTable {
-    font-size: 0.9rem;
+  .tableContainer {
+    overflow-x: auto; /* Activar scroll horizontal solo en pantallas pequeñas */
+    min-width: 100%; /* Asegura que el contenedor de la tabla ocupe el 100% del ancho disponible */
   }
 
-  .productsTable th,
+  .productsTable {
+    font-size: 0.9rem;
+    display: block; /* Ayuda a que la tabla se desborde correctamente */
+    width: max-content; /* Fuerza a la tabla a tomar el ancho de su contenido */
+    min-width: 800px; /* Asegura que la tabla no se encoja más allá de este ancho */
+  }
+
+  .productsTable thead {
+    display: none; /* Ocultar encabezados de tabla en móvil */
+  }
+
+  .productsTable tr {
+    display: block;
+    margin-bottom: 10px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
   .productsTable td {
-    padding: 10px 8px;
+    display: block;
+    text-align: right;
+    padding-left: 50%; /* Espacio para la etiqueta */
+    position: relative;
+    border-bottom: none; /* Eliminar bordes entre celdas en vista de tarjeta */
+  }
+
+  .productsTable td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    width: calc(50% - 20px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+    color: #333;
+    text-align: left;
+  }
+
+  .productsTable td:last-child {
+    border-bottom: none;
   }
 }

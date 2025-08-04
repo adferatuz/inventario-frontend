@@ -1,0 +1,46 @@
+
+/* Estilos adaptados de front-end-vanilla/css/styles.css */
+
+.statCard {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.3s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.statIcon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.statInfo h3 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.statInfo p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Colores de los iconos */
+.primary { background: #667eea; }
+.secondary { background: #f093fb; }
+.tertiary { background: #4facfe; }
+.quaternary { background: #43e97b; }

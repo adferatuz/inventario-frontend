@@ -1,14 +1,8 @@
-import React, { createContext, useReducer, useContext, useEffect, useMemo } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { authReducer, initialAuthState } from './authReducer';
-import type { AuthState, AuthAction } from './types';
+import { AuthContext } from './authContext';
 import { supabase } from '@/shared/lib/supabase';
-import { signInWithPassword, signOut } from '@/entities/User/api/supabaseAuthService';
 
-// Define the shape of the context value
-type AuthContextType = [AuthState, React.Dispatch<AuthAction>];
-
-// Create the AuthContext
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 /**
  * AuthProvider component that manages the authentication state using useReducer.
@@ -75,54 +69,4 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       {children}
     </AuthContext.Provider>
   );
-};
-
-// Custom hook to use the auth state
-export const useAuthState = (): AuthState => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuthState must be used within an AuthProvider');
-  }
-  return context[0];
-};
-
-// Custom hook to use the auth dispatch function
-export const useAuthDispatch = (): React.Dispatch<AuthAction> => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuthDispatch must be used within an AuthProvider');
-  }
-  return context[1];
-};
-
-// Custom hook to expose authentication actions
-export const useAuthActions = () => {
-  const dispatch = useAuthDispatch();
-
-  const actions = useMemo(() => ({
-    login: async (email: string, password: string) => {
-      dispatch({ type: 'LOGIN_START' });
-      try {
-        const authResponse = await signInWithPassword(email, password);
-        if (authResponse) {
-          dispatch({ type: 'LOGIN_SUCCESS', payload: { user: authResponse, token: authResponse.token } });
-        } else {
-          dispatch({ type: 'LOGIN_FAILURE', payload: 'Login failed: No session data' });
-        }
-      } catch (error: any) {
-        dispatch({ type: 'LOGIN_FAILURE', payload: error.message });
-      }
-    },
-    logout: async () => {
-      try {
-        await signOut();
-        dispatch({ type: 'LOGOUT' });
-      } catch (error: any) {
-        // Handle logout error if necessary, though usually less critical
-        console.error('Logout error:', error);
-      }
-    },
-  }), [dispatch]);
-
-  return actions;
 };
