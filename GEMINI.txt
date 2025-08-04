@@ -1,49 +1,59 @@
-### Resumen del Estado Actual del Proyecto y Próximos Pasos (Para la Próxima Sesión)
+# Hoja de Ruta: Implementación de Visualización de Productos con Paginación
 
-**1. Estado Actual del Proyecto Frontend:**
+**Objetivo:** Desarrollar la funcionalidad de listado y paginación de productos en el frontend, integrando los endpoints del servidor y utilizando los componentes UI existentes, siguiendo la arquitectura FSD.
 
-*   **Fase 1: Fundación y Configuración (Completada)**
-    *   Proyecto inicializado con React, Vite, TypeScript, pnpm.
-    *   Configuración de ESLint y Prettier.
-    *   Estructura de directorios FSD implementada.
-    *   Capa `shared` con componentes UI genéricos y `axios` configurado.
+---
 
-*   **Fase 2: Lógica de Negocio - Capa `entities` (Completada)**
-    *   Análisis del código heredado del backend realizado.
-    *   Interfaces TypeScript (`Product`, `User`, `AuthResponse`) definidas y sincronizadas con DTOs del backend.
-    *   Servicios de API (`productService.ts`, `authService.ts`) implementados para interactuar con el backend de lógica de negocio.
+## Plan de Acción Detallado
 
-*   **Fase 3: Gestión de Estado y Autenticación (Completada)**
-    *   Sistema de estado global de autenticación implementado con `useReducer` y `useContext`.
-    *   Integración completa con Supabase para autenticación:
-        *   Librería `@supabase/supabase-js` instalada.
-        *   Cliente de Supabase configurado (`src/shared/lib/supabase.ts`).
-        *   `AuthProvider` actualizado para manejar la sesión inicial y escuchar cambios de autenticación de Supabase.
-        *   Servicio de autenticación específico de Supabase (`supabaseAuthService.ts`) creado.
-        *   `apiClient` (axios) configurado con un interceptor para incluir el JWT de Supabase en las cabeceras de las peticiones al backend de lógica de negocio.
-    *   `AuthProvider` integrado en `src/app/main.tsx`.
+### Fase 1: Preparación de la Capa de Datos y Definición de Tipos
 
-*   **Dependencias Adicionales:**
-    *   `react-router-dom` instalado para la gestión de rutas.
+1.  **Actualizar Tipos de Producto y Paginación (`entities/Product/model/types.ts`)**
+    *   **Acción:** Definir una interfaz para la respuesta de paginación del servidor que incluya los datos de los productos y metadatos como `totalItems`, `totalPages`, `currentPage`, `pageSize`.
+    *   **Justificación:** Asegurar que el frontend entienda la estructura de datos que recibirá del backend para la paginación.
 
-*   **Calidad del Código:**
-    *   Errores de tipado (TypeScript) resueltos.
-    *   Errores de linting (ESLint) resueltos, incluyendo refactorización para `verbatimModuleSyntax` y `react-refresh/only-export-components`.
+2.  **Extender Servicio de Productos (`entities/Product/api/productService.ts`)**
+    *   **Acción:** Modificar o añadir un método para `getProducts` que acepte parámetros de paginación (`page`, `size`, `sortBy`, `sortDir`) y de búsqueda (`term`).
+    *   **Justificación:** Permitir que el frontend solicite productos de forma paginada y filtrada al backend.
 
-**2. Hoja de Ruta para la Implementación de Features (Próxima Fase):**
+### Fase 2: Desarrollo de la Característica de Listado de Productos (`features/ProductList`)
 
-La hoja de ruta detallada para la implementación de las `features` ha sido definida y validada. Se enfoca en:
+1.  **Crear Estructura de la Característica**
+    *   **Acción:** Crear el directorio `src/features/ProductList` con subdirectorios `ui` y `model`.
+    *   **Justificación:** Adherirse a la arquitectura FSD para encapsular la lógica y la UI de esta funcionalidad.
 
-*   **Fase 1: Autenticación y Rutas Protegidas** (Configuración de Rutas, Página de Login).
-*   **Fase 2: Dashboard y Layout Principal**.
-*   **Fase 3: Visualización y Gestión de Productos** (Listado, Paginación, Filtros/Búsqueda, CRUD).
+2.  **Desarrollar Componente `ProductTable` (`features/ProductList/ui/ProductTable/index.tsx`)**
+    *   **Acción:** Crear un componente React que:
+        *   Utilice el componente `Table` de `shared/ui` para renderizar la lista de productos.
+        *   Maneje el estado local para la lista de productos, el estado de carga (`loading`), y posibles errores (`error`).
+        *   Maneje el estado de la paginación (página actual, tamaño de página, total de elementos, total de páginas).
+        *   Implemente `useEffect` para llamar a `productService.getProducts` cuando los parámetros de paginación o búsqueda cambien.
+        *   Muestre el componente `Spinner` de `shared/ui` mientras los datos están cargando.
+        *   Muestre mensajes de error si la llamada a la API falla.
+    *   **Justificación:** Centralizar la lógica de visualización y paginación de productos, reutilizando componentes existentes.
 
-**3. Próximo Paso Inmediato (Referencia Visual Vanilla UI):**
+3.  **Implementar Controles de Paginación**
+    *   **Acción:** Dentro de `ProductTable` o un componente auxiliar, añadir botones "Anterior" y "Siguiente" (usando `Button` de `shared/ui`) y un indicador de página actual.
+    *   **Justificación:** Proporcionar la interfaz de usuario necesaria para navegar entre las páginas de productos.
 
-Para asegurar que los estilos e interfaces de usuario del frontend React sean idénticos a tu proyecto original en JavaScript vanilla, se ha acordado el siguiente paso:
+4.  **Implementar Barra de Búsqueda**
+    *   **Acción:** Añadir un componente de búsqueda (usando `Input` y `Button` de `shared/ui`) que permita al usuario introducir un término de búsqueda y activarla.
+    *   **Justificación:** Permitir a los usuarios filtrar productos por un término específico.
 
-*   **Acción Requerida por el Usuario:** Crear un nuevo directorio llamado `ui-reference` en la raíz del proyecto `inventario-frontend`.
-*   **Acción Requerida por el Usuario:** Copiar todos los archivos y carpetas de tu proyecto vanilla (HTML, CSS, JS, imágenes, etc.) dentro de este nuevo directorio `ui-reference`.
-*   **Acción Requerida por el Usuario:** Añadir `ui-reference/` a tu archivo `.gitignore` para que estos archivos no sean rastreados por Git.
+### Fase 3: Integración y Refinamientos
 
-Una vez que hayas completado estos pasos, notifícame para que pueda comenzar a revisar el proyecto vanilla y utilizarlo como referencia visual durante la implementación de las `features`.
+1.  **Integrar en la Página del Dashboard (`pages/DashboardPage/index.tsx`)**
+    *   **Acción:** Importar y renderizar el componente `ProductTable` (o el componente principal de `features/ProductList`) dentro de la `DashboardPage`.
+    *   **Justificación:** Hacer visible la funcionalidad de listado de productos en la interfaz principal.
+
+2.  **Manejo de Estados Vacíos y Errores**
+    *   **Acción:** Añadir lógica para mostrar un mensaje amigable cuando no se encuentren productos o cuando ocurra un error en la carga de datos.
+    *   **Justificación:** Mejorar la experiencia de usuario en escenarios no ideales.
+
+3.  **Consideraciones Futuras (No se implementará en esta fase, pero se tendrá en cuenta):**
+    *   **Renderizado Basado en Roles:** Una vez que la integración de roles con Supabase y el frontend esté completa, se podrá implementar la lógica para mostrar/ocultar acciones (ej. botones de "Editar" o "Eliminar") o incluso columnas de la tabla basándose en el rol del usuario (ADMIN vs. USER).
+    *   **Ordenación por Columnas:** Añadir la funcionalidad de ordenar la tabla haciendo clic en los encabezados de las columnas, utilizando los parámetros `sortBy` y `sortDir` del API.
+
+---
+
+Este plan nos permitirá avanzar de manera estructurada, asegurando la reutilización de componentes y el cumplimiento de la arquitectura definida.

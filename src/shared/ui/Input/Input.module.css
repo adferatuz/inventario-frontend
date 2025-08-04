@@ -1,5 +1,5 @@
 .formGroup {
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; Removido para mejor alineación en flex containers */
 }
 
 .label {
@@ -23,6 +23,8 @@
   border-radius: 10px;
   font-size: 1rem;
   transition: all 0.3s ease;
+  height: 44px; /* Altura fija para simetría */
+  box-sizing: border-box; /* Incluir padding y borde en la altura */
 }
 
 .input:focus {

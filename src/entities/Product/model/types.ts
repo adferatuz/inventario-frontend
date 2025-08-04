@@ -12,3 +12,34 @@ export interface Product {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface PageableObject {
+  paged: boolean;
+  pageNumber: number;
+  pageSize: number;
+  unpaged: boolean;
+  offset: number;
+  sort: SortObject[];
+}
+
+export interface SortObject {
+  direction: string;
+  nullHandling: string;
+  ascending: boolean;
+  property: string;
+  ignoreCase: boolean;
+}
+
+export interface PageProduct {
+  totalPages: number;
+  totalElements: number;
+  pageable: PageableObject;
+  size: number;
+  content: Product[];
+  number: number;
+  sort: SortObject[];
+  numberOfElements: number;
+  first: boolean;
+  last: boolean;
+  empty: boolean;
+}
