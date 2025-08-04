@@ -4,11 +4,13 @@
   overflow: hidden;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
   margin-bottom: 20px;
+  /* overflow-x: auto; Se moverá dentro del media query para ser más específico */
 }
 
 .productsTable {
   width: 100%;
   border-collapse: collapse;
+  min-width: 800px; /* Asegura que la tabla no se encoja más allá de este ancho */
 }
 
 .productsTable th {
@@ -31,8 +33,13 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .tableContainer {
+    overflow-x: auto; /* Activar scroll horizontal solo en pantallas pequeñas */
+  }
+
   .productsTable {
     font-size: 0.9rem;
+    display: block; /* Ayuda a que la tabla se desborde correctamente */
   }
 
   .productsTable th,
