@@ -6,24 +6,24 @@
 
 ## Plan de Acción Detallado
 
-### Fase 1: Preparación de la Capa de Datos y Definición de Tipos
+### Fase 1: Preparación de la Capa de Datos y Definición de Tipos (Completada)
 
 1.  **Actualizar Tipos de Producto y Paginación (`entities/Product/model/types.ts`)**
-    *   **Acción:** Definir una interfaz para la respuesta de paginación del servidor que incluya los datos de los productos y metadatos como `totalItems`, `totalPages`, `currentPage`, `pageSize`.
+    *   [x] **Acción:** Definir una interfaz para la respuesta de paginación del servidor que incluya los datos de los productos y metadatos como `totalItems`, `totalPages`, `currentPage`, `pageSize`.
     *   **Justificación:** Asegurar que el frontend entienda la estructura de datos que recibirá del backend para la paginación.
 
 2.  **Extender Servicio de Productos (`entities/Product/api/productService.ts`)**
-    *   **Acción:** Modificar o añadir un método para `getProducts` que acepte parámetros de paginación (`page`, `size`, `sortBy`, `sortDir`) y de búsqueda (`term`).
+    *   [x] **Acción:** Modificar o añadir un método para `getProducts` que acepte parámetros de paginación (`page`, `size`, `sortBy`, `sortDir`) y de búsqueda (`term`).
     *   **Justificación:** Permitir que el frontend solicite productos de forma paginada y filtrada al backend.
 
-### Fase 2: Desarrollo de la Característica de Listado de Productos (`features/ProductList`)
+### Fase 2: Desarrollo de la Característica de Listado de Productos (`features/ProductList`) (Completada)
 
 1.  **Crear Estructura de la Característica**
-    *   **Acción:** Crear el directorio `src/features/ProductList` con subdirectorios `ui` y `model`.
+    *   [x] **Acción:** Crear el directorio `src/features/ProductList` con subdirectorios `ui` y `model`.
     *   **Justificación:** Adherirse a la arquitectura FSD para encapsular la lógica y la UI de esta funcionalidad.
 
 2.  **Desarrollar Componente `ProductTable` (`features/ProductList/ui/ProductTable/index.tsx`)**
-    *   **Acción:** Crear un componente React que:
+    *   [x] **Acción:** Crear un componente React que:
         *   Utilice el componente `Table` de `shared/ui` para renderizar la lista de productos.
         *   Maneje el estado local para la lista de productos, el estado de carga (`loading`), y posibles errores (`error`).
         *   Maneje el estado de la paginación (página actual, tamaño de página, total de elementos, total de páginas).
@@ -33,27 +33,41 @@
     *   **Justificación:** Centralizar la lógica de visualización y paginación de productos, reutilizando componentes existentes.
 
 3.  **Implementar Controles de Paginación**
-    *   **Acción:** Dentro de `ProductTable` o un componente auxiliar, añadir botones "Anterior" y "Siguiente" (usando `Button` de `shared/ui`) y un indicador de página actual.
+    *   [x] **Acción:** Dentro de `ProductTable` o un componente auxiliar, añadir botones "Anterior" y "Siguiente" (usando `Button` de `shared/ui`) y un indicador de página actual.
     *   **Justificación:** Proporcionar la interfaz de usuario necesaria para navegar entre las páginas de productos.
 
 4.  **Implementar Barra de Búsqueda**
-    *   **Acción:** Añadir un componente de búsqueda (usando `Input` y `Button` de `shared/ui`) que permita al usuario introducir un término de búsqueda y activarla.
+    *   [x] **Acción:** Añadir un componente de búsqueda (usando `Input` y `Button` de `shared/ui`) que permita al usuario introducir un término de búsqueda y activarla.
     *   **Justificación:** Permitir a los usuarios filtrar productos por un término específico.
 
-### Fase 3: Integración y Refinamientos
+### Fase 3: Integración y Refinamientos (Completada)
 
 1.  **Integrar en la Página del Dashboard (`pages/DashboardPage/index.tsx`)**
-    *   **Acción:** Importar y renderizar el componente `ProductTable` (o el componente principal de `features/ProductList`) dentro de la `DashboardPage`.
+    *   [x] **Acción:** Importar y renderizar el componente `ProductTable` (o el componente principal de `features/ProductList`) dentro de la `DashboardPage`.
     *   **Justificación:** Hacer visible la funcionalidad de listado de productos en la interfaz principal.
 
 2.  **Manejo de Estados Vacíos y Errores**
-    *   **Acción:** Añadir lógica para mostrar un mensaje amigable cuando no se encuentren productos o cuando ocurra un error en la carga de datos.
+    *   [x] **Acción:** Añadir lógica para mostrar un mensaje amigable cuando no se encuentren productos o cuando ocurra un error en la carga de datos.
     *   **Justificación:** Mejorar la experiencia de usuario en escenarios no ideales.
 
 3.  **Consideraciones Futuras (No se implementará en esta fase, pero se tendrá en cuenta):**
-    *   **Renderizado Basado en Roles:** Una vez que la integración de roles con Supabase y el frontend esté completa, se podrá implementar la lógica para mostrar/ocultar acciones (ej. botones de "Editar" o "Eliminar") o incluso columnas de la tabla basándose en el rol del usuario (ADMIN vs. USER).
-    *   **Ordenación por Columnas:** Añadir la funcionalidad de ordenar la tabla haciendo clic en los encabezados de las columnas, utilizando los parámetros `sortBy` y `sortDir` del API.
+    *   [ ] **Renderizado Basado en Roles:** Una vez que la integración de roles con Supabase y el frontend esté completa, se podrá implementar la lógica para mostrar/ocultar acciones (ej. botones de "Editar" o "Eliminar") o incluso columnas de la tabla basándose en el rol del usuario (ADMIN vs. USER).
+    *   [ ] **Ordenación por Columnas:** Añadir la funcionalidad de ordenar la tabla haciendo clic en los encabezados de las columnas, utilizando los parámetros `sortBy` y `sortDir` del API.
 
 ---
 
-Este plan nos permitirá avanzar de manera estructurada, asegurando la reutilización de componentes y el cumplimiento de la arquitectura definida.
+## Contexto Actual y Próximos Pasos
+
+**Estado:** La implementación de la visualización de productos con paginación, búsqueda y responsividad (transformación a cards en móvil) está **completa y funcionando correctamente**.
+
+**Problema Pendiente:** Se está experimentando un `Error 400 (Bad Request)` al intentar autenticarse con Supabase. Esto debe ser investigado y resuelto antes de continuar con funcionalidades que requieran autenticación.
+
+**Próximas Tareas (Priorizadas):**
+
+1.  **Resolver Problema de Autenticación Supabase (Error 400 Bad Request):**
+    *   Investigar la causa del error (credenciales, configuración de Supabase, etc.).
+    *   Implementar la solución.
+2.  **Capa `features` - CRUD de Productos (Continuación):**
+    *   Implementar formulario de edición de producto dentro del modal.
+    *   Implementar funcionalidad de creación de producto.
+3.  **Integración con el Servidor MCP (IA FIRST):** Definir la comunicación y los servicios para interactuar con el módulo de IA.

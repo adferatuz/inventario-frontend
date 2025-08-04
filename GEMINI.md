@@ -1,6 +1,6 @@
 # Estado Actual del Proyecto Frontend (inventario-frontend)
 
-**Fecha de la última sesión:** 31 de julio de 2025
+**Fecha de la última sesión:** 4 de agosto de 2025
 
 **Contexto General:**
 El proyecto frontend ha sido inicializado con éxito utilizando React, Vite y TypeScript, siguiendo una arquitectura modular granular (Feature-Sliced Design - FSD). El objetivo es replicar la interfaz visual del proyecto original de JavaScript "vainilla" y prepararlo para una futura integración con un módulo de IA (IA FIRST).
@@ -12,9 +12,11 @@ El proyecto frontend ha sido inicializado con éxito utilizando React, Vite y Ty
     *   [x] Configuración de ESLint y Prettier.
     *   [x] Implementación de la estructura de directorios FSD.
 *   **Capa `shared` (Componentes Reutilizables):**
-    *   [x] Creación de componentes UI genéricos (`Button`, `Input`, `Modal`, etc.).
+    *   [x] Creación de componentes UI genéricos (`Button`, `Input`, `Modal`, `Spinner`, `Table`).
     *   [x] Configuración de FontAwesome.
     *   [x] Configuración de cliente `axios` base para las llamadas a la API.
+    *   [x] Implementación de `useMediaQuery` hook para responsividad.
+    *   [x] Cambio de fuente global a 'Ubuntu'.
 
 ---
 
@@ -23,8 +25,8 @@ El proyecto frontend ha sido inicializado con éxito utilizando React, Vite y Ty
 **Objetivo:** Definir la capa de `entities` que contiene la lógica de negocio principal y los modelos de datos de la aplicación.
 
 *   [x] **Análisis del código heredado:** Revisión y obtención de estructuras de datos y endpoints del backend.
-*   [x] Definir interfaces TypeScript para los modelos de datos (`Product`, `User`, `AuthResponse`).
-*   [x] Implementar los servicios de API (`productService.ts`, `authService.ts`) que encapsulen las llamadas a los endpoints del backend.
+*   [x] Definir interfaces TypeScript para los modelos de datos (`Product`, `User`, `AuthResponse`, `PageProduct`, `PageableObject`, `SortObject`).
+*   [x] Implementar los servicios de API (`productService.ts`, `authService.ts`) que encapsulen las llamadas a los endpoints del backend, incluyendo paginación y búsqueda para productos.
 
 ---
 
@@ -43,6 +45,30 @@ El proyecto frontend ha sido inicializado con éxito utilizando React, Vite y Ty
 
 ---
 
+**Fase 4: Implementación de Características Principales (En Progreso)**
+
+**Objetivo:** Implementar las funcionalidades principales de la aplicación (Login, Dashboard, CRUD de productos).
+
+*   [x] **Dashboard y Listado de Productos:**
+    *   [x] Implementación del componente `ProductTable` (`features/ProductList`).
+    *   [x] Integración de `ProductTable` en `DashboardPage`.
+    *   [x] Funcionalidad de paginación (dinámica: 5 items/móvil, 10 items/escritorio).
+    *   [x] Funcionalidad de búsqueda.
+    *   [x] Transformación de tabla a "cards" en vista móvil.
+    *   [x] Modales para "Editar", "Eliminar" y "Ver Detalles" de producto.
+    *   [x] Lógica de eliminación de producto (frontend).
+    *   [x] Mejoras de UI/UX (simetría de búsqueda, control de spinner).
+
+---
+
 **Próximas Tareas:**
-*   **[ ] Capa `features`:** Implementar las funcionalidades principales de la aplicación (Login, Dashboard, CRUD de productos).
+*   **[ ] Resolver Problema de Autenticación Supabase (Error 400 Bad Request):**
+    *   Contexto: Se está recibiendo un error 400 al intentar autenticarse con Supabase.
+    *   Acción: Investigar y solucionar la causa del error (posibles credenciales incorrectas, configuración de Supabase, etc.).
+*   **[ ] Capa `features` - CRUD de Productos (Continuación):**
+    *   [ ] Implementar formulario de edición de producto dentro del modal.
+    *   [ ] Implementar funcionalidad de creación de producto.
 *   **[ ] Integración con el Servidor MCP (IA FIRST):** Definir la comunicación y los servicios para interactuar con el módulo de IA.
+*   **[ ] Consideraciones Futuras:**
+    *   [ ] Renderizado Basado en Roles (frontend).
+    *   [ ] Ordenación por Columnas en la tabla.

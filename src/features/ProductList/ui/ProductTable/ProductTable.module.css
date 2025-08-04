@@ -5,6 +5,13 @@
   padding: 20px;
 }
 
+@media (max-width: 768px) {
+  .productTableContainer {
+    /* overflow-x: auto; Removido para centralizar la responsividad en Table.module.css */
+  }
+}
+
+
 .searchBar {
   display: flex;
   gap: 10px;
@@ -53,6 +60,22 @@
 
 .actions button {
   margin-right: 5px;
+}
+
+.cardActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.viewMoreButton {
+  background-color: #6c757d;
+  color: white;
+}
+
+.viewMoreButton:hover {
+  background-color: #5a6268;
 }
 
 .editButton {

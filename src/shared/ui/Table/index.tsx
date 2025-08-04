@@ -1,15 +1,28 @@
 import React from 'react';
 import styles from './Table.module.css';
+import useMediaQuery from '@/shared/lib/hooks/useMediaQuery';
 
-interface TableProps {
+interface TableProps<T> {
   headers: string[];
-  children: React.ReactNode; // Las filas de la tabla (tbody)
+  data: T[];
+  renderItem: (item: T, headers: string[]) => React.ReactNode;
 }
 
-const Table: React.FC<TableProps> = ({
-  headers,
-  children
-}) => {
+const Table = <T,>({ headers, data, renderItem }: TableProps<T>) => {
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
+  if (isMobile) {
+    return (
+      <div className={styles.cardContainer}>
+        {data.map((item, index) => (
+          <div key={index} className={styles.card}>
+            {renderItem(item, headers)}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className={styles.tableContainer}>
       <table className={styles.productsTable}>
@@ -21,7 +34,7 @@ const Table: React.FC<TableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {children}
+          {data.map((item) => renderItem(item, headers))}
         </tbody>
       </table>
     </div>
