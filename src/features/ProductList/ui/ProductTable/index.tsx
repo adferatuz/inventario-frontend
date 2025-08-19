@@ -106,10 +106,10 @@ const ProductTable: React.FC = () => {
   };
 
   // Función para renderizar cada elemento (fila de tabla o card item)
-  const renderProductItem = (product: Product, headers: string[]) => (
-    <React.Fragment>
-      {isMobile ? (
-        <> {/* Card View */}
+  const renderProductItem = (product: Product, headers: string[]) => {
+    if (isMobile) {
+      return (
+        <>
           <div className={styles.cardItem}>
             <span className={styles.cardLabel}>{headers[0]}:</span>
             <span className={styles.cardValue}>{product.id}</span>
@@ -150,35 +150,37 @@ const ProductTable: React.FC = () => {
             </Button>
           </div>
         </>
-      ) : (
-        <tr key={product.id}> {/* Table Row View */}
-          <td>{product.id}</td>
-          <td>{product.name}</td>
-          <td>{product.sku}</td>
-          <td>{product.category || 'N/A'}</td>
-          <td>{product.brand || 'N/A'}</td>
-          <td>{product.stockQuantity}</td>
-          <td>${product.price.toFixed(2)}</td>
-          <td className={styles.actions}>
-            <Button
-              variant="action"
-              className={styles.editButton}
-              onClick={() => handleEditClick(product)}
-            >
-              <i className="fas fa-edit"></i>
-            </Button>
-            <Button
-              variant="action"
-              className={styles.deleteButton}
-              onClick={() => handleDeleteClick(product)}
-            >
-              <i className="fas fa-trash-alt"></i>
-            </Button>
-          </td>
-        </tr>
-      )}
-    </React.Fragment>
-  );
+      );
+    }
+    // Table Row View: retorna SOLO el <tr>
+    return (
+      <tr key={product.id}>
+        <td>{product.id}</td>
+        <td>{product.name}</td>
+        <td>{product.sku}</td>
+        <td>{product.category || 'N/A'}</td>
+        <td>{product.brand || 'N/A'}</td>
+        <td>{product.stockQuantity}</td>
+        <td>${product.price.toFixed(2)}</td>
+        <td className={styles.actions}>
+          <Button
+            variant="action"
+            className={styles.editButton}
+            onClick={() => handleEditClick(product)}
+          >
+            <i className="fas fa-edit"></i>
+          </Button>
+          <Button
+            variant="action"
+            className={styles.deleteButton}
+            onClick={() => handleDeleteClick(product)}
+          >
+            <i className="fas fa-trash-alt"></i>
+          </Button>
+        </td>
+      </tr>
+    );
+  };
 
   if (loading) {
     return <Spinner message="Loading products..." />;
