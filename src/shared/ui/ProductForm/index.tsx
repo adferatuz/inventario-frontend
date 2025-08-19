@@ -1,29 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Product } from '@/entities/Product/model/types';
 import Input from '@/shared/ui/Input';
 import Button from '@/shared/ui/Button';
 import styles from './ProductForm.module.css';
 
 interface ProductFormProps {
-  product: Product;
-  onSave: (data: Partial<Omit<Product, 'id' | 'createdAt' | 'updatedAt'>>) => void;
+  product?: Product | null;
+  onSave: (data: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => void;
   onCancel: () => void;
   loading?: boolean;
+  mode: 'create' | 'edit';
 }
 
-const ProductForm: React.FC<ProductFormProps> = ({ product, onSave, onCancel, loading }) => {
+const ProductForm: React.FC<ProductFormProps> = ({ product, onSave, onCancel, loading, mode }) => {
   const [form, setForm] = useState({
-    name: product.name || '',
-    sku: product.sku || '',
-    description: product.description || '',
-    price: product.price,
-    stockQuantity: product.stockQuantity,
-    minimumStock: product.minimumStock,
-    category: product.category || '',
-    brand: product.brand || '',
-    status: product.status,
+    name: '',
+    sku: '',
+    description: '',
+    price: 0,
+    stockQuantity: 0,
+    minimumStock: 0,
+    category: '',
+    brand: '',
+    status: 'ACTIVE',
   });
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (product && mode === 'edit') {
+      setForm({
+        name: product.name || '',
+        sku: product.sku || '',
+        description: product.description || '',
+        price: product.price,
+        stockQuantity: product.stockQuantity,
+        minimumStock: product.minimumStock,
+        category: product.category || '',
+        brand: product.brand || '',
+        status: product.status,
+      });
+    }
+  }, [product, mode]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -60,7 +77,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSave, onCancel, lo
       </label>
       {error && <div className={styles.error}>{error}</div>}
       <div className={styles.actions}>
-        <Button type="submit" variant="primary" disabled={loading}>Guardar</Button>
+        <Button type="submit" variant="primary" disabled={loading}>
+          {mode === 'create' ? 'Crear Producto' : 'Guardar Cambios'}
+        </Button>
         <Button type="button" variant="secondary" onClick={onCancel} disabled={loading}>Cancelar</Button>
       </div>
     </form>

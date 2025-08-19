@@ -88,6 +88,14 @@ const ProductTable: React.FC = () => {
     setIsModalOpen(true);
   };
 
+  const handleCreateClick = () => {
+    setSelectedProduct(null);
+    setModalType('create');
+    setEditLoading(false);
+    setEditError(null);
+    setIsModalOpen(true);
+  };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedProduct(null);
@@ -109,6 +117,23 @@ const ProductTable: React.FC = () => {
         setError('Failed to delete product. Please try again.');
         setLoading(false); // Ocultar spinner en caso de error
       }
+    }
+  };
+
+  const handleSaveProduct = async (productData: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => {
+    setEditLoading(true);
+    setEditError(null);
+    try {
+      if (modalType === 'edit' && selectedProduct) {
+        await productService.updateProduct(selectedProduct.id, productData);
+      } else {
+        await productService.createProduct(productData);
+      }
+      await fetchProducts();
+      handleCloseModal();
+    } catch (err: any) {
+      setEditError('Error al guardar el producto.');
+      setEditLoading(false);
     }
   };
 
@@ -210,13 +235,7 @@ const ProductTable: React.FC = () => {
           <i className="fas fa-search"></i> Search
         </Button>
         <div style={{ flex: 1 }} />
-        <Button variant="success" onClick={() => {
-          setSelectedProduct(null);
-          setModalType('create');
-          setEditLoading(false);
-          setEditError(null);
-          setIsModalOpen(true);
-        }}>
+        <Button variant="success" onClick={handleCreateClick}>
           <i className="fas fa-plus"></i> Agregar producto
         </Button>
       </div>
@@ -257,30 +276,22 @@ const ProductTable: React.FC = () => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         title={
-          modalType === 'edit'
-            ? 'Edit Product'
+          modalType === 'create'
+            ? 'Crear Producto'
+            : modalType === 'edit'
+            ? 'Editar Producto'
             : modalType === 'delete'
-            ? 'Delete Product'
-            : 'Product Details'
+            ? 'Eliminar Producto'
+            : 'Detalles del Producto'
         }
       >
-        {modalType === 'edit' && selectedProduct && (
+        {(modalType === 'create' || modalType === 'edit') && (
           <ProductForm
+            mode={modalType}
             product={selectedProduct}
             loading={editLoading}
             onCancel={handleCloseModal}
-            onSave={async (data) => {
-              setEditLoading(true);
-              setEditError(null);
-              try {
-                await productService.updateProduct(selectedProduct.id, data);
-                await fetchProducts();
-                handleCloseModal();
-              } catch (err: any) {
-                setEditError('Error al guardar los cambios.');
-                setEditLoading(false);
-              }
-            }}
+            onSave={handleSaveProduct}
           />
         )}
         {editError && <div className={styles.errorMessage}>{editError}</div>}

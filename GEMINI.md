@@ -71,13 +71,13 @@ El proyecto frontend ha sido inicializado con éxito utilizando React, Vite y Ty
     *   [ ] Implementar funcionalidad de creación de producto:
         *   [x] Crear rama feature/create-product-form.
         *   [x] Agregar botón "Agregar producto" en el dashboard, sobre la tabla.
-        *   [ ] Reutilizar el modal y formulario de producto para modo creación (formulario vacío).
-        *   [ ] Implementar lógica para abrir el modal en modo creación.
-        *   [ ] Validar campos obligatorios antes de crear.
-        *   [ ] Llamar a productService.createProduct al guardar.
-        *   [ ] Recargar la lista de productos tras crear uno nuevo.
-        *   [ ] Mostrar feedback de carga y error en el proceso de creación.
-        *   [ ] Mejorar UX: limpiar formulario y cerrar modal tras éxito.
+        *   [x] Reutilizar el modal y formulario de producto para modo creación (formulario vacío).
+        *   [x] Implementar lógica para abrir el modal en modo creación.
+        *   [x] Validar campos obligatorios antes de crear.
+        *   [x] Llamar a productService.createProduct al guardar.
+        *   [x] Recargar la lista de productos tras crear uno nuevo.
+        *   [x] Mostrar feedback de carga y error en el proceso de creación.
+        *   [x] Mejorar UX: limpiar formulario y cerrar modal tras éxito.
 
 *   **[ ] Integración con el Servidor MCP (IA FIRST):**
     *   Definir la comunicación y los servicios para interactuar con el módulo de IA.
