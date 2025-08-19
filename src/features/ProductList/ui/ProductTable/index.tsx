@@ -25,7 +25,7 @@ const ProductTable: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [modalType, setModalType] = useState<'edit' | 'delete' | 'view' | null>(null); // Añadir 'view' al tipo de modal
+  const [modalType, setModalType] = useState<'edit' | 'delete' | 'view' | 'create' | null>(null); // Añadir 'create' al tipo de modal
   const [editLoading, setEditLoading] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
 
@@ -208,6 +208,16 @@ const ProductTable: React.FC = () => {
         />
         <Button onClick={handleSearch} variant="primary">
           <i className="fas fa-search"></i> Search
+        </Button>
+        <div style={{ flex: 1 }} />
+        <Button variant="success" onClick={() => {
+          setSelectedProduct(null);
+          setModalType('create');
+          setEditLoading(false);
+          setEditError(null);
+          setIsModalOpen(true);
+        }}>
+          <i className="fas fa-plus"></i> Agregar producto
         </Button>
       </div>
 

@@ -1,3 +1,9 @@
+/* Top bar para botón de agregar producto */
+.topBar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
 .productTableContainer {
   background: white;
   border-radius: 15px;
@@ -12,11 +18,12 @@
 }
 
 
+
 .searchBar {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
-  align-items: center; /* Alinea verticalmente el input y el botón */
+  align-items: center;
 }
 
 .searchBar input {

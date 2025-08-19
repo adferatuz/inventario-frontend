@@ -65,10 +65,23 @@ El proyecto frontend ha sido inicializado con éxito utilizando React, Vite y Ty
 *   **[ ] Resolver Problema de Autenticación Supabase (Error 400 Bad Request):**
     *   Contexto: Se está recibiendo un error 400 al intentar autenticarse con Supabase.
     *   Acción: Investigar y solucionar la causa del error (posibles credenciales incorrectas, configuración de Supabase, etc.).
+
 *   **[ ] Capa `features` - CRUD de Productos (Continuación):**
     *   [ ] Implementar formulario de edición de producto dentro del modal.
-    *   [ ] Implementar funcionalidad de creación de producto.
-*   **[ ] Integración con el Servidor MCP (IA FIRST):** Definir la comunicación y los servicios para interactuar con el módulo de IA.
+    *   [ ] Implementar funcionalidad de creación de producto:
+        *   [x] Crear rama feature/create-product-form.
+        *   [ ] Agregar botón "Agregar producto" en el dashboard, sobre la tabla.
+        *   [ ] Reutilizar el modal y formulario de producto para modo creación (formulario vacío).
+        *   [ ] Implementar lógica para abrir el modal en modo creación.
+        *   [ ] Validar campos obligatorios antes de crear.
+        *   [ ] Llamar a productService.createProduct al guardar.
+        *   [ ] Recargar la lista de productos tras crear uno nuevo.
+        *   [ ] Mostrar feedback de carga y error en el proceso de creación.
+        *   [ ] Mejorar UX: limpiar formulario y cerrar modal tras éxito.
+
+*   **[ ] Integración con el Servidor MCP (IA FIRST):**
+    *   Definir la comunicación y los servicios para interactuar con el módulo de IA.
+
 *   **[ ] Consideraciones Futuras:**
     *   [ ] Renderizado Basado en Roles (frontend).
     *   [ ] Ordenación por Columnas en la tabla.
