@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import type { Product } from '@/entities/Product/model/types';
 import Input from '@/shared/ui/Input';
 import Button from '@/shared/ui/Button';
-import styles from './EditProductForm.module.css';
+import styles from './ProductForm.module.css';
 
-interface EditProductFormProps {
+interface ProductFormProps {
   product: Product;
   onSave: (data: Partial<Omit<Product, 'id' | 'createdAt' | 'updatedAt'>>) => void;
   onCancel: () => void;
   loading?: boolean;
 }
 
-const EditProductForm: React.FC<EditProductFormProps> = ({ product, onSave, onCancel, loading }) => {
+const ProductForm: React.FC<ProductFormProps> = ({ product, onSave, onCancel, loading }) => {
   const [form, setForm] = useState({
     name: product.name || '',
     sku: product.sku || '',
@@ -67,4 +67,4 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onSave, onCa
   );
 };
 
-export default EditProductForm;
+export default ProductForm;

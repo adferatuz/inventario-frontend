@@ -70,7 +70,7 @@ El proyecto frontend ha sido inicializado con éxito utilizando React, Vite y Ty
     *   [ ] Implementar formulario de edición de producto dentro del modal.
     *   [ ] Implementar funcionalidad de creación de producto:
         *   [x] Crear rama feature/create-product-form.
-        *   [ ] Agregar botón "Agregar producto" en el dashboard, sobre la tabla.
+        *   [x] Agregar botón "Agregar producto" en el dashboard, sobre la tabla.
         *   [ ] Reutilizar el modal y formulario de producto para modo creación (formulario vacío).
         *   [ ] Implementar lógica para abrir el modal en modo creación.
         *   [ ] Validar campos obligatorios antes de crear.

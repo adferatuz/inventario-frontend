@@ -7,7 +7,7 @@ import Spinner from '@/shared/ui/Spinner';
 import Button from '@/shared/ui/Button';
 import Input from '@/shared/ui/Input';
 import Modal from '@/shared/ui/Modal';
-import EditProductForm from '../EditProductForm';
+import ProductForm from '@/shared/ui/ProductForm';
 import useMediaQuery from '@/shared/lib/hooks/useMediaQuery'; // Importar useMediaQuery
 import styles from './ProductTable.module.css';
 
@@ -265,7 +265,7 @@ const ProductTable: React.FC = () => {
         }
       >
         {modalType === 'edit' && selectedProduct && (
-          <EditProductForm
+          <ProductForm
             product={selectedProduct}
             loading={editLoading}
             onCancel={handleCloseModal}
