@@ -7,6 +7,7 @@ import Spinner from '@/shared/ui/Spinner';
 import Button from '@/shared/ui/Button';
 import Input from '@/shared/ui/Input';
 import Modal from '@/shared/ui/Modal';
+import EditProductForm from '../EditProductForm';
 import useMediaQuery from '@/shared/lib/hooks/useMediaQuery'; // Importar useMediaQuery
 import styles from './ProductTable.module.css';
 
@@ -25,6 +26,8 @@ const ProductTable: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [modalType, setModalType] = useState<'edit' | 'delete' | 'view' | null>(null); // Añadir 'view' al tipo de modal
+  const [editLoading, setEditLoading] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
 
   // Actualizar el tamaño de página si cambia el estado móvil
   useEffect(() => {
@@ -68,6 +71,8 @@ const ProductTable: React.FC = () => {
   const handleEditClick = (product: Product) => {
     setSelectedProduct(product);
     setModalType('edit');
+    setEditLoading(false);
+    setEditError(null);
     setIsModalOpen(true);
   };
 
@@ -87,6 +92,8 @@ const ProductTable: React.FC = () => {
     setIsModalOpen(false);
     setSelectedProduct(null);
     setModalType(null);
+    setEditLoading(false);
+    setEditError(null);
   };
 
   const handleConfirmDelete = async () => {
@@ -248,13 +255,25 @@ const ProductTable: React.FC = () => {
         }
       >
         {modalType === 'edit' && selectedProduct && (
-          <div>
-            <h3>Edit Product: {selectedProduct.name}</h3>
-            <p>ID: {selectedProduct.id}</p>
-            <p>SKU: {selectedProduct.sku}</p>
-            <p>Formulario de edición del producto irá aquí.</p>
-          </div>
+          <EditProductForm
+            product={selectedProduct}
+            loading={editLoading}
+            onCancel={handleCloseModal}
+            onSave={async (data) => {
+              setEditLoading(true);
+              setEditError(null);
+              try {
+                await productService.updateProduct(selectedProduct.id, data);
+                await fetchProducts();
+                handleCloseModal();
+              } catch (err: any) {
+                setEditError('Error al guardar los cambios.');
+                setEditLoading(false);
+              }
+            }}
+          />
         )}
+        {editError && <div className={styles.errorMessage}>{editError}</div>}
         {modalType === 'delete' && selectedProduct && (
           <div>
             <h3>Confirm Deletion</h3>
