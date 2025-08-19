@@ -220,6 +220,7 @@ const ProductTable: React.FC = () => {
           ]}
           data={products}
           renderItem={renderProductItem}
+          isMobile={isMobile}
         />
       )}
 
