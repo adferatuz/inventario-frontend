@@ -1,16 +1,15 @@
 import React from 'react';
 import styles from './Table.module.css';
-import useMediaQuery from '@/shared/lib/hooks/useMediaQuery';
 
-interface TableProps<T> {
+
+type TableProps<T> = {
   headers: string[];
   data: T[];
   renderItem: (item: T, headers: string[]) => React.ReactNode;
-}
+  isMobile?: boolean;
+};
 
-const Table = <T,>({ headers, data, renderItem }: TableProps<T>) => {
-  const isMobile = useMediaQuery('(max-width: 768px)');
-
+const Table = <T,>({ headers, data, renderItem, isMobile }: TableProps<T>) => {
   if (isMobile) {
     return (
       <div className={styles.cardContainer}>
@@ -34,7 +33,14 @@ const Table = <T,>({ headers, data, renderItem }: TableProps<T>) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => renderItem(item, headers))}
+          {data.map((item, index) => {
+            // Se recomienda que renderItem retorne un <tr>, aquí le agregamos key si no la tiene
+            const element = renderItem(item, headers);
+            if (React.isValidElement(element)) {
+              return React.cloneElement(element, { key: index });
+            }
+            return element;
+          })}
         </tbody>
       </table>
     </div>

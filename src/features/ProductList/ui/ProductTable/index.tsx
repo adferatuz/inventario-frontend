@@ -7,6 +7,7 @@ import Spinner from '@/shared/ui/Spinner';
 import Button from '@/shared/ui/Button';
 import Input from '@/shared/ui/Input';
 import Modal from '@/shared/ui/Modal';
+import EditProductForm from '../EditProductForm';
 import useMediaQuery from '@/shared/lib/hooks/useMediaQuery'; // Importar useMediaQuery
 import styles from './ProductTable.module.css';
 
@@ -25,6 +26,8 @@ const ProductTable: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [modalType, setModalType] = useState<'edit' | 'delete' | 'view' | null>(null); // Añadir 'view' al tipo de modal
+  const [editLoading, setEditLoading] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
 
   // Actualizar el tamaño de página si cambia el estado móvil
   useEffect(() => {
@@ -68,6 +71,8 @@ const ProductTable: React.FC = () => {
   const handleEditClick = (product: Product) => {
     setSelectedProduct(product);
     setModalType('edit');
+    setEditLoading(false);
+    setEditError(null);
     setIsModalOpen(true);
   };
 
@@ -87,6 +92,8 @@ const ProductTable: React.FC = () => {
     setIsModalOpen(false);
     setSelectedProduct(null);
     setModalType(null);
+    setEditLoading(false);
+    setEditError(null);
   };
 
   const handleConfirmDelete = async () => {
@@ -106,10 +113,10 @@ const ProductTable: React.FC = () => {
   };
 
   // Función para renderizar cada elemento (fila de tabla o card item)
-  const renderProductItem = (product: Product, headers: string[]) => (
-    <React.Fragment>
-      {isMobile ? (
-        <> {/* Card View */}
+  const renderProductItem = (product: Product, headers: string[]) => {
+    if (isMobile) {
+      return (
+        <>
           <div className={styles.cardItem}>
             <span className={styles.cardLabel}>{headers[0]}:</span>
             <span className={styles.cardValue}>{product.id}</span>
@@ -150,35 +157,37 @@ const ProductTable: React.FC = () => {
             </Button>
           </div>
         </>
-      ) : (
-        <tr key={product.id}> {/* Table Row View */}
-          <td>{product.id}</td>
-          <td>{product.name}</td>
-          <td>{product.sku}</td>
-          <td>{product.category || 'N/A'}</td>
-          <td>{product.brand || 'N/A'}</td>
-          <td>{product.stockQuantity}</td>
-          <td>${product.price.toFixed(2)}</td>
-          <td className={styles.actions}>
-            <Button
-              variant="action"
-              className={styles.editButton}
-              onClick={() => handleEditClick(product)}
-            >
-              <i className="fas fa-edit"></i>
-            </Button>
-            <Button
-              variant="action"
-              className={styles.deleteButton}
-              onClick={() => handleDeleteClick(product)}
-            >
-              <i className="fas fa-trash-alt"></i>
-            </Button>
-          </td>
-        </tr>
-      )}
-    </React.Fragment>
-  );
+      );
+    }
+    // Table Row View: retorna SOLO el <tr>
+    return (
+      <tr key={product.id}>
+        <td>{product.id}</td>
+        <td>{product.name}</td>
+        <td>{product.sku}</td>
+        <td>{product.category || 'N/A'}</td>
+        <td>{product.brand || 'N/A'}</td>
+        <td>{product.stockQuantity}</td>
+        <td>${product.price.toFixed(2)}</td>
+        <td className={styles.actions}>
+          <Button
+            variant="action"
+            className={styles.editButton}
+            onClick={() => handleEditClick(product)}
+          >
+            <i className="fas fa-edit"></i>
+          </Button>
+          <Button
+            variant="action"
+            className={styles.deleteButton}
+            onClick={() => handleDeleteClick(product)}
+          >
+            <i className="fas fa-trash-alt"></i>
+          </Button>
+        </td>
+      </tr>
+    );
+  };
 
   if (loading) {
     return <Spinner message="Loading products..." />;
@@ -218,6 +227,7 @@ const ProductTable: React.FC = () => {
           ]}
           data={products}
           renderItem={renderProductItem}
+          isMobile={isMobile}
         />
       )}
 
@@ -245,13 +255,25 @@ const ProductTable: React.FC = () => {
         }
       >
         {modalType === 'edit' && selectedProduct && (
-          <div>
-            <h3>Edit Product: {selectedProduct.name}</h3>
-            <p>ID: {selectedProduct.id}</p>
-            <p>SKU: {selectedProduct.sku}</p>
-            <p>Formulario de edición del producto irá aquí.</p>
-          </div>
+          <EditProductForm
+            product={selectedProduct}
+            loading={editLoading}
+            onCancel={handleCloseModal}
+            onSave={async (data) => {
+              setEditLoading(true);
+              setEditError(null);
+              try {
+                await productService.updateProduct(selectedProduct.id, data);
+                await fetchProducts();
+                handleCloseModal();
+              } catch (err: any) {
+                setEditError('Error al guardar los cambios.');
+                setEditLoading(false);
+              }
+            }}
+          />
         )}
+        {editError && <div className={styles.errorMessage}>{editError}</div>}
         {modalType === 'delete' && selectedProduct && (
           <div>
             <h3>Confirm Deletion</h3>
