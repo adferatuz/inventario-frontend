@@ -34,7 +34,14 @@ const Table = <T,>({ headers, data, renderItem }: TableProps<T>) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => renderItem(item, headers))}
+          {data.map((item, index) => {
+            // Se recomienda que renderItem retorne un <tr>, aquí le agregamos key si no la tiene
+            const element = renderItem(item, headers);
+            if (React.isValidElement(element)) {
+              return React.cloneElement(element, { key: index });
+            }
+            return element;
+          })}
         </tbody>
       </table>
     </div>
