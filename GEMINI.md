@@ -62,13 +62,13 @@ El proyecto frontend ha sido inicializado con éxito utilizando React, Vite y Ty
 ---
 
 **Próximas Tareas:**
-*   **[ ] Resolver Problema de Autenticación Supabase (Error 400 Bad Request):**
+*   **[x] Resolver Problema de Autenticación Supabase (Error 400 Bad Request):**
     *   Contexto: Se está recibiendo un error 400 al intentar autenticarse con Supabase.
     *   Acción: Investigar y solucionar la causa del error (posibles credenciales incorrectas, configuración de Supabase, etc.).
 
-*   **[ ] Capa `features` - CRUD de Productos (Continuación):**
-    *   [ ] Implementar formulario de edición de producto dentro del modal.
-    *   [ ] Implementar funcionalidad de creación de producto:
+*   **[x] Capa `features` - CRUD de Productos (Completado):**
+    *   [x] Implementar formulario de edición de producto dentro del modal.
+    *   [x] Implementar funcionalidad de creación de producto:
         *   [x] Crear rama feature/create-product-form.
         *   [x] Agregar botón "Agregar producto" en el dashboard, sobre la tabla.
         *   [x] Reutilizar el modal y formulario de producto para modo creación (formulario vacío).

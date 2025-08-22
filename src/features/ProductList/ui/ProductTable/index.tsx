@@ -28,6 +28,7 @@ const ProductTable: React.FC = () => {
   const [modalType, setModalType] = useState<'edit' | 'delete' | 'view' | 'create' | null>(null); // Añadir 'create' al tipo de modal
   const [editLoading, setEditLoading] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false); // Estado para la eliminación
 
   // Actualizar el tamaño de página si cambia el estado móvil
   useEffect(() => {
@@ -106,16 +107,17 @@ const ProductTable: React.FC = () => {
 
   const handleConfirmDelete = async () => {
     if (selectedProduct) {
-      setLoading(true); // Mostrar spinner durante la eliminación
+      setIsDeleting(true); // Usar el nuevo estado de eliminación
       try {
         await productService.deleteProduct(selectedProduct.id);
         console.log(`Product with ID: ${selectedProduct.id} deleted successfully.`);
-        fetchProducts(); // Recargar la lista de productos
+        await fetchProducts(); // Recargar la lista de productos
         handleCloseModal();
       } catch (err) {
         console.error('Error deleting product:', err);
-        setError('Failed to delete product. Please try again.');
-        setLoading(false); // Ocultar spinner en caso de error
+        // Opcional: mostrar un error específico en el modal
+      } finally {
+        setIsDeleting(false); // Finalizar el estado de eliminación
       }
     }
   };
@@ -300,8 +302,12 @@ const ProductTable: React.FC = () => {
             <h3>Confirm Deletion</h3>
             <p>Are you sure you want to delete product: <strong>{selectedProduct.name}</strong> (ID: {selectedProduct.id})?</p>
             <div className={styles.modalActions}>
-              <Button variant="danger" onClick={handleConfirmDelete}>Delete</Button>
-              <Button variant="secondary" onClick={handleCloseModal}>Cancel</Button>
+              <Button variant="danger" onClick={handleConfirmDelete} disabled={isDeleting}>
+                {isDeleting ? <Spinner size="sm" /> : 'Delete'}
+              </Button>
+              <Button variant="secondary" onClick={handleCloseModal} disabled={isDeleting}>
+                Cancel
+              </Button>
             </div>
           </div>
         )}
